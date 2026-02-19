@@ -6,9 +6,10 @@ const AnimatedButton = ({ text, onClick }) => {
     <button
       onClick={onClick}
       className="
-        relative overflow-hidden bg-[#ff4c60] text-white font-bold py-4 px-6 
+        relative overflow-hidden bg-[#ff4c60] text-white font-bold py-3 px-4
         rounded-md uppercase tracking-widest text-xs transition-all
-        before:absolute before:top-0 before:left-0 before:h-full before:w-0 
+        whitespace-nowrap
+        before:absolute before:top-0 before:left-0 before:h-full before:w-0
         before:bg-blue-950 before:transition-all before:duration-500 before:ease-out
         hover:before:w-full
         hover:text-white
