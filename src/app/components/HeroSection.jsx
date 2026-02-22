@@ -1,5 +1,7 @@
 import Image from "next/image"
 import heroimage from "../../../public/images/heroimage.png"
+import HomeProductPage from '../productsSection/HomeProductPage'
+
 export default function Hero() {
   return (
     <section className="relative bg-yellow-400 overflow-hidden">
@@ -29,6 +31,7 @@ export default function Hero() {
   </div>
 </div>
 
+<HomeProductPage/>
 
     
     </section>

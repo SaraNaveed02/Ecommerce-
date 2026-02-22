@@ -1,26 +1,26 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import SingleProduct from './Singleproduct'
+import { useFilter } from '../context/FilterContext'
 
 const FetchingData = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
-  // Ek baar mein kitne products dikhane hain
   const [limit] = useState(12); 
-  // Kitne products skip karne hain (Next batch ke liye)
   const [skip, setSkip] = useState(0);
+
+  const { selectedCategory, searchQuery, sortBy, setSortBy } = useFilter()
 
   const getData = async (currentSkip) => {
     try {
-      // API call with limit and skip for pagination
       const response = await fetch(
         `https://dummyjson.com/products?limit=${limit}&skip=${currentSkip}`, 
         { cache: "no-store" }
       );
       const data = await response.json();
       
-      // Purane products ke saath naye products add karna
       setProducts(prev => [...prev, ...data.products]);
       setTotal(data.total);
       setLoading(false);
@@ -30,9 +30,39 @@ const FetchingData = () => {
     }
   };
 
+  // Fetch initial data
   useEffect(() => {
     getData(0);
   }, []);
+
+  // Filter and sort products
+  useEffect(() => {
+    let filtered = [...products];
+
+    // Filter by category
+    if (selectedCategory) {
+      filtered = filtered.filter(p => p.category === selectedCategory);
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(p => 
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Sort products
+    if (sortBy === 'price-low-high') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price-high-low') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'rating') {
+      filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    }
+
+    setFilteredProducts(filtered);
+  }, [products, selectedCategory, searchQuery, sortBy]);
 
   const loadMore = () => {
     const nextSkip = skip + limit;
@@ -44,41 +74,51 @@ const FetchingData = () => {
     return <div className="text-center p-10">Loading Products...</div>;
   }
 
-  // Progress bar percentage calculate karna (Image 3 ke liye)
   const progressPercentage = (products.length / total) * 100;
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-white">
       {/* Header Section */}
-   {/* Header Section - Exactly as per image_7e6784 */}
-<div className="flex justify-end items-center border-b border-gray-100 pb-4 mb-10 gap-8">
-  <div className="flex items-center gap-3">
-    <label className="text-[14px] text-[#004b61] font-medium">Sort by:</label>
-    <div className="relative border-b border-[#004b61] min-w-[140px]">
-      <select className="appearance-none bg-transparent w-full py-1 text-[14px] text-[#004b61] font-semibold focus:outline-none cursor-pointer">
-        <option>Featured</option>
-        <option>Price: Low to High</option>
-        <option>Price: High to Low</option>
-      </select>
-      {/* Custom Down Arrow */}
-      <span className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-[#004b61]">
-        ⌄
-      </span>
-    </div>
-  </div>
-  
-  <span className="text-[#004b61] text-[14px] font-medium">
-    {total} Products
-  </span>
-</div>
-      {/* Responsive Grid */}
-      <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-        {products.map((item) => (
-          <SingleProduct key={item.id} product={item} />
-        ))}
+      <div className="flex justify-end items-center border-b border-gray-100 pb-4 mb-10 gap-8">
+        <div className="flex items-center gap-3">
+          <label className="text-[14px] text-[#004b61] font-medium">Sort by:</label>
+          <div className="relative border-b border-[#004b61] min-w-[140px]">
+            <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="appearance-none bg-transparent w-full py-1 text-[14px] text-[#004b61] font-semibold focus:outline-none cursor-pointer"
+            >
+              <option value="featured">Featured</option>
+              <option value="price-low-high">Price: Low to High</option>
+              <option value="price-high-low">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+            {/* Custom Down Arrow */}
+            <span className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-[#004b61]">
+              ⌄
+            </span>
+          </div>
+        </div>
+        
+        <span className="text-[#004b61] text-[14px] font-medium">
+          {filteredProducts.length} Products
+        </span>
       </div>
 
-      {/* Load More Section (Image 3 Design) */}
+      {/* Responsive Grid */}
+      <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((item) => (
+            <SingleProduct key={item.id} product={item} />
+          ))
+        ) : (
+          <div className="col-span-full text-center py-10">
+            <p className="text-[#004b61] text-lg font-medium">No products found</p>
+          </div>
+        )}
+      </div>
+
+      {/* Load More Section */}
       {products.length < total && (
         <div className="mt-20 flex flex-col items-center gap-6">
           <div className="w-full max-w-md text-center">

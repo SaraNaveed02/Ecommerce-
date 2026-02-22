@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import QuickViewModal from "../components/QuickViewModal";
 import Button from "../components/Button"
+import Link from "next/link";
 
 
 const SingleProduct = ({ product }) => {
@@ -14,6 +15,7 @@ const SingleProduct = ({ product }) => {
     const originalPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
 
     return (
+        <Link href={`/product/${product.id}`}>
         <div className="group relative cursor-pointer flex flex-col h-full bg-white rounded-lg overflow-hidden transition-all border border-transparent hover:border-gray-100 shadow-sm">
 
             {/* Image Container */}
@@ -134,7 +136,9 @@ const SingleProduct = ({ product }) => {
                     </div>
                 </div>
 
-                <Button text="Add To Cart"/>
+                <div onClick={(e) => e.preventDefault()}>
+                    <Button text="Add To Cart" product={product} quantity={1}/>
+                </div>
             </div>
 
             <QuickViewModal
@@ -143,6 +147,7 @@ const SingleProduct = ({ product }) => {
                 onClose={() => setIsQuickViewOpen(false)}
             />
         </div>
+        </Link>
     );
 };
 
