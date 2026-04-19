@@ -77,9 +77,9 @@ const FetchingData = () => {
   const progressPercentage = (products.length / total) * 100;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-white">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 bg-white">
       {/* Header Section */}
-      <div className="flex justify-end items-center border-b border-gray-100 pb-4 mb-10 gap-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-100 pb-4 mb-8 gap-4">
         <div className="flex items-center gap-3">
           <label className="text-[14px] text-[#004b61] font-medium">Sort by:</label>
           <div className="relative border-b border-[#004b61] min-w-[140px]">
@@ -100,13 +100,13 @@ const FetchingData = () => {
           </div>
         </div>
         
-        <span className="text-[#004b61] text-[14px] font-medium">
+        <span className="text-[#004b61] text-[14px] font-medium sm:text-right">
           {filteredProducts.length} Products
         </span>
       </div>
 
       {/* Responsive Grid */}
-      <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-8 sm:gap-y-10">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => (
             <SingleProduct key={item.id} product={item} />

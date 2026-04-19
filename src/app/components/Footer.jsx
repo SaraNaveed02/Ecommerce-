@@ -25,10 +25,10 @@ const Footer = () => {
   const offset = circumference - (scrollProgress / 100) * circumference;
 
   return (
-    <footer className="bg-[#f6f3db] pt-20 pb-10 px-10 mt-20 relative border-t border-red-200">
+    <footer className="bg-[#f6f3db] pt-14 sm:pt-20 pb-10 px-4 sm:px-10 mt-14 sm:mt-20 relative border-t border-red-200">
 
     {/* Main Grid */}
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 lg:gap-16">
   
       {/* About Us */}
       <div>
@@ -83,24 +83,24 @@ const Footer = () => {
     </div>
   
     {/* Bottom Line */}
-    <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-red-300 flex justify-between items-center">
+    <div className="max-w-7xl mx-auto mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-red-300 flex justify-between items-center">
       <p className="text-[#004b61] text-sm">
         © 2026, <span className="font-bold">Befundamentals.</span>
       </p>
     </div>
   
     {/* Floating Buttons */}
-    <div className="fixed bottom-6 right-6 flex flex-col gap-4 z-100">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col gap-3 sm:gap-4 z-100">
   
       {/* WhatsApp */}
-      <div className="bg-[#25D366] p-4 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform text-white text-2xl">
+      <div className="bg-[#25D366] p-3 sm:p-4 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform text-white text-xl sm:text-2xl">
         <FaWhatsapp />
       </div>
   
       {/* Scroll To Top (NO CHANGE IN LOGIC) */}
       <div
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="relative w-14 h-14 bg-white rounded-full shadow-lg cursor-pointer flex items-center justify-center group"
+        className="relative w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full shadow-lg cursor-pointer flex items-center justify-center group"
       >
         <svg className="absolute top-0 left-0 w-full h-full -rotate-90">
           <circle

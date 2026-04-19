@@ -41,11 +41,11 @@ const Navbar = () => {
 
 
   return (
-    <nav className="bg-pink-500 text-white   z-80 top-0 sticky ">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+    <nav className="bg-pink-500 text-white z-80 top-0 sticky">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 px-3 sm:px-4 py-3 sm:py-4">
 
         {/* LEFT (Mobile) */}
-        <div className="flex items-center gap-4 lg:hidden">
+        <div className="flex items-center gap-2 sm:gap-3 lg:hidden">
           <button onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 setSearchInput(e.target.value)
                 setSearchQuery(e.target.value)
               }}
-              className="bg-white text-gray-800 rounded px-3 py-2 text-xs w-32 focus:outline-none"
+              className="bg-white text-gray-800 rounded px-3 py-2 text-xs w-24 sm:w-32 focus:outline-none"
             />
             <Search size={16} className="absolute right-2 top-2 text-gray-500 pointer-events-none" />
           </div>
@@ -136,7 +136,7 @@ hover:after:w-full">SHOP ALL</a>
         </div>
 
         {/* CENTER LOGO */}
-        <h1 className="text-2xl md:text-4xl font-normal font-fredoka tracking-tighter  uppercase">
+        <h1 className="text-base sm:text-xl md:text-4xl font-normal font-fredoka tracking-tight uppercase leading-none">
           <span
             className="text-white relative"
             style={{
@@ -150,7 +150,7 @@ hover:after:w-full">SHOP ALL</a>
         </h1>
 
         {/* RIGHT */}
-        <div className="flex items-center gap-4 lg:gap-8 font-medium">
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 font-medium">
 
           {/* Desktop Links */}
           <div className="hidden lg:flex gap-8 items-center ">
@@ -181,7 +181,7 @@ hover:after:w-full">SHOP ALL</a>
 
         {/* Cart Sidebar */}
         <div
-          className={`fixed right-0 top-0 h-full w-80 bg-white shadow-lg z-40 transition-transform duration-300 overflow-y-auto ${
+          className={`fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-lg z-40 transition-transform duration-300 overflow-y-auto ${
             cartOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -207,7 +207,7 @@ hover:after:w-full">SHOP ALL</a>
                       className="flex gap-3 pb-4 border-b border-gray-200"
                     >
                       {/* Product Image */}
-                      <div className="w-16 h-16 flex-shrink-0 bg-[#f3f3f3] rounded-lg overflow-hidden flex items-center justify-center">
+                      <div className="w-16 h-16 shrink-0 bg-[#f3f3f3] rounded-lg overflow-hidden flex items-center justify-center">
                         <img
                           src={item.thumbnail}
                           alt={item.title}
@@ -292,7 +292,7 @@ hover:after:w-full">SHOP ALL</a>
 
       {/* Mobile Slide Menu */}
       {mobileOpen && (
-        <div className="lg:hidden h-screen bg-pink-600 p-6 space-y-4 text-white">
+        <div className="lg:hidden min-h-[calc(100vh-72px)] bg-pink-600 p-5 space-y-4 text-white overflow-y-auto">
           <p>SHOP ALL</p>
           <p>SHOP BUNDLES</p>
 
